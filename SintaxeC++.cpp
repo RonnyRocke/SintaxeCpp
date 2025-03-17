@@ -12,7 +12,121 @@
 #include <cstdlib>
 #include <stdio.h>
 #include <algorithm>
+#include <ctype.h>
 
+GLfloat escala = 1;
+GLfloat rotacao = 0;
+GLfloat moverx,movery = 0.0f;
+
+
+struct Desenhos{
+	public:
+			static void Quadrado(){
+			glClearColor(1.0f,0.0f,0.0f,0.0f);
+			glClear(GL_COLOR_BUFFER_BIT);
+			
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			gluOrtho2D(-5,5,-5,5);
+			
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+			glScalef(escala,escala,0);
+			glRotatef(rotacao,0,0,1);
+			glTranslatef(movery,moverx,0);
+			
+			glBegin(GL_POLYGON);
+			glColor3f(1.0f,0.0f,0.1f);
+			glVertex2f(-0.5,-0.5);
+			glColor3f(0.0f,0.1f,1.0f);
+			glVertex2f(0.5f,-0.5f);
+			glColor3f(0.1f,1.0f,0.0f);
+			glVertex2f(0.5f,0.5f);
+			glColor3f(1.0f,1.1f,0.1f);
+			glVertex2f(-0.5f,0.5f);
+			glEnd();
+			
+			glFlush();
+			//glSwapBuffers();
+			}
+			
+		static void Triângulo(){
+			glClearColor(0.0f,0.0f,0.0f,0.0f);
+			glClear(GL_COLOR_BUFFER_BIT);
+			
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			gluOrtho2D(-5,5,-5,5);
+			
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+			glScalef(escala,escala,0);
+			glRotatef(rotacao,0,0,1);
+			glTranslatef(movery,moverx,0);
+			
+			glBegin(GL_TRIANGLES);
+			glColor3f(1.0f,0.0f,0.1f);
+			glVertex2f(-0.5,-0.5);
+			glColor3f(0.0f,0.1f,1.0f);
+			glVertex2f(0.5f,-0.5f);
+			glColor3f(0.1f,1.0f,0.0f);
+			glVertex2f(0.0f,0.5f);
+			glColor3f(1.0f,1.1f,0.1f);
+			glEnd();
+			
+			glFlush();		
+		}
+		
+		 static void zoom(unsigned char tecla, GLint x, GLint y){
+			
+			
+			switch(tecla){
+				
+				case '=':
+					escala+=0.1f;
+				break;
+				
+				case '-':
+					escala-=0.1f;
+				break;
+				
+				case 'q':
+					rotacao+=3;
+				break;
+				
+				case 'w':
+					rotacao-=3;
+				break;
+				
+				}
+				glutPostRedisplay();
+			}
+		
+		static void movimentar( int tecla, int x, int y ){
+			
+			
+			switch(tecla){
+				
+				case GLUT_KEY_UP:
+					moverx+=0.1f;
+				break;		
+				
+				case GLUT_KEY_DOWN:
+					moverx-=0.1f;
+				break;
+				
+				case GLUT_KEY_RIGHT:
+					movery+=0.1f;
+				break;
+				
+				case GLUT_KEY_LEFT:
+					movery-=0.1f;
+				break;
+				
+				}
+				glutPostRedisplay();
+			}
+	};
 
 class Menu {
 	
@@ -61,13 +175,13 @@ public:
 					}
 		}
 
-int main() {
+int main(int argc, char** argv) {
     Menu menu;
     setlocale(LC_ALL, "pt-BR");
 
     do {
 		std::cout<<"\nSINTAXE DO C++";
-		std::cout<<"\n1: Fazer Contas \n2: Ver-Sintaxe Da Linguagem C++ \n3: ";
+		std::cout<<"\n1: Fazer Contas \n2: Ver-Sintaxe Da Linguagem C++ \n3: Ver-Desenhos\n4: Sair\n";
         std::cout << menu.mensagem;
         std::cin >> menu.opt;
 
@@ -179,18 +293,50 @@ int main() {
 				std::cout<<"\n1: Operadores Aritméticos \n2: Tipos Primitivos\n3: Estruturas-Condicionais\n4: Estrutura-De-Repetições\n5: Tipos-Lógicos \n6: Collections\n6: Iterator\n";
 				std::cout<<"\nO QUE DESEJA VER: ";
 				std::cin>>sintaxe;
-				
 				switch(sintaxe){
 					case 1:
+					std::cout<<"\n*********************************************";
+					std::cout<<"\nOPERADORES ARITMÉTICOS: ";
+					std::cout<<"\n\t+ -* /";
+					std::cout<<"\n\t++ -- ";
+					std::cout<<"\n\t+= -= *= /=\n";
+					std::cout<<"*********************************************";
 					break;
 					
 					case 2:
+					std::cout<<"\n*********************************************";
+					std::cout<<"\nTIPOS PRIMITIVOS: ";
+				
+					if(typeid(std::string)==typeid(std::string)){
+						std::cout<<"\nstd::string: \nTamanho bytes: "<<sizeof(std::string);
+						std::cout<<"\n\nint: \nTamanho bytes: "<<sizeof(int);
+						std::cout<<"\n\nfloat: \nTamanho bytes: "<<sizeof(float);
+						std::cout<<"\n\ndouble: \nTamanho bytes: "<<sizeof(double);
+						std::cout<<"\n\nchar: \nTamanho bytes:  "<<sizeof(char);
+						std::cout<<"\n\nByte: \nTamanho bytes: "<<sizeof(std::byte);
+						std::cout<<"\n*********************************************";
+
+						}
+						else{
+							return 0;
+							}
 					break;
 					
 					case 3:
+					std::cout<<"\n*********************************************";
+					std::cout<<"\nEstruturas-Condicionais: ";
+					std::cout<<"\n\n\tif(condição){\ninstrução}\n";
+					std::cout<<"\n\n\telse if(condição){\ninstrução}\n";
+					std::cout<<"\n\n\telse{\ninstrução}\n";
+					std::cout<<"*********************************************";
 					break;
 					
 					case 4:
+					std::cout<<"\n*********************************************";
+					std::cout<<"\nEstruturas De Repetições: ";
+
+					std::cout<<"\n*********************************************";
+			
 					break;
 					
 					case 5:
@@ -207,22 +353,77 @@ int main() {
 					
 					case 9:
 					break;
+					
+					default:
+					std::cout<<"\nOpção Inválida!";
+					break;
 					}
 				
                 menu.aperteContinue();
                 break;
-
-            case 3:
-                std::cout << "\nObrigado Por Utilizar O Programa!\n";
+			
+			case 3:
+			
+			int selecionar;
+			std::cout<<"\n1: Quadrado\n2: Retângulo \n3: Círculo \n4: Triângulo\n";
+			std::cin>>selecionar;
+			
+			switch(selecionar){
+				
+				case 1:
+				glutInit(&argc,argv);
+				glutInitDisplayMode(GLUT_SINGLE|GLUT_RGBA);
+				glutInitWindowSize(800,600);
+				glutInitWindowPosition(350,120);
+				glutCreateWindow("Quadrado");
+				glutDisplayFunc(Desenhos::Quadrado);
+				glutKeyboardFunc(Desenhos::zoom);
+				glutSpecialFunc(Desenhos::movimentar);
+				glutMainLoop();				
+				break;
+				
+				case 2:
+				
+				break;
+				
+				case 3:
+				
+				break;
+				
+				case 4:
+				glutInit(&argc,argv);
+				glutInitDisplayMode(GLUT_SINGLE|GLUT_RGBA);
+				glutInitWindowSize(800,600);
+				glutInitWindowPosition(350,120);
+				glutCreateWindow("Triângulo");
+				glutDisplayFunc(Desenhos::Triângulo);
+				glutKeyboardFunc(Desenhos::zoom);
+				glutSpecialFunc(Desenhos::movimentar);
+				glutMainLoop();
+				break;
+				
+				default:
+				
+				break;
+				
+				}
+			
+			break;
+			
+            case 4:
+                
+             break;
+             case 5:
+				std::cout << "\nObrigado Por Utilizar O Programa!\n";
                 menu.tela = false;
-                break;
+                break;            
+             break;
 
             default:
                 std::cout << "\nOpção Inválida!\n";
                 menu.aperteContinue();
                 break;
         }
-
     } while (menu.tela);
 
     return 0;
