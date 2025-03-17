@@ -208,78 +208,67 @@ int main(int argc, char** argv) {
             switch(operacao){
 					
 					case '+':
-						std::cout<<"\nDigite Dois Valores: ";
-						std::cin>>a>>b;					
-						resultado=FazendoContas::adicao(a,b);
-						
-						if(a!=int() || b!=int()){
-							std::cout<<"\nValores não são inteiros!";
-							menu.tela=false;
+						std::cout << "\nDigite Dois Valores: ";
+						if (!(std::cin >> a >> b)) {  // Verifica se a entrada é válida
+							std::cout << "\nEntrada inválida!";
+							menu.limparEntrada();
 							break;
-							}
-						else{
-						printf("\n%d + %d = %d\n",a,b,resultado);
-					}
-					break;
+						}
+						resultado = FazendoContas::adicao(a, b);
+						std::cout << "\n" << a << " + " << b << " = " << resultado << "\n";
+						menu.limparEntrada();
+						break;
 					
 					case '-':
-						std::cout<<"\nDigite Dois Valores: ";
-						std::cin>>a>>b;
-						resultado=FazendoContas::subtracao(a,b);
-							
-						if(a!=int() || b!=int()){
-							std::cout<<"\nValores não são inteiros!";
-							menu.tela=false;
+						std::cout << "\nDigite Dois Valores: ";
+						if (!(std::cin >> a >> b)) {  // Verifica se a entrada é válida
+							std::cout << "\nEntrada inválida!";
+							menu.limparEntrada();
 							break;
-							}
-						else{
-						printf("\n%d + %d = %d\n",a,b,resultado);
-					}								
-					break;
+						}
+						resultado = FazendoContas::subtracao(a, b);
+						std::cout << "\n" << a << " - " << b << " = " << resultado << "\n";
+						menu.limparEntrada();
+						break;
+					
 					
 					case '*':
-						std::cout<<"\nDigite Dois Valores: ";
-						std::cin>>a>>b;
-						resultado=FazendoContas::multiplicacao(a,b);
-						
-						if(a!=int() || b!=int()){
-							std::cout<<"\nValores não são inteiros!";
-							menu.tela=false;
+						std::cout << "\nDigite Dois Valores: ";
+						if (!(std::cin >> a >> b)) {  // Verifica se a entrada é válida
+							std::cout << "\nEntrada inválida!";
+							menu.limparEntrada();
 							break;
-							}
-						else{
-						printf("\n%d + %d = %d\n",a,b,resultado);
-					}		
+						}
+						resultado = FazendoContas::multiplicacao(a, b);
+						std::cout << "\n" << a << " * " << b << " = " << resultado << "\n";
+						menu.limparEntrada();
+						break;
+					
 
 					
 					case '/':
-						std::cout<<"\nDigite Dois Valores: ";
-						std::cin>>a>>b;
-						resultado=FazendoContas::divisao(a,b);
-						
-						if(a!=int() || b!=int()){
-							std::cout<<"\nValores não são inteiros!";
-							menu.tela=false;
+						std::cout << "\nDigite Dois Valores: ";
+						if (!(std::cin >> a >> b)) {  // Verifica se a entrada é válida
+							std::cout << "\nEntrada inválida!";
+							menu.limparEntrada();
 							break;
-							}
-						else{
-						printf("\n%d + %d = %d\n",a,b,resultado);
-					}
+						}
+						resultado = FazendoContas::divisao(a, b);
+						std::cout << "\n" << a << " / " << b << " = " << resultado << "\n";
+						menu.limparEntrada();
+						break;
 					
 					case 'r':
-						std::cout<<"\nDigite Um Valor: ";
-						std::cin>>a;					
-						raiz_quadrada = FazendoContas::raiz(a);
-						std::cout<<"\nRaiz Quadrada de "<<a<<": "<<raiz_quadrada;
-
-						if(a!=int() || b!=int()){
-							std::cout<<"\nValores não são inteiros!";
-							menu.tela=false;
+						std::cout << "\nDigite Um Valor: ";
+						if (!(std::cin >> a)) {  // Verifica se a entrada é válida
+							std::cout << "\nEntrada inválida!";
+							menu.limparEntrada();
 							break;
-							}
-						else{
-						printf("\n%d + %d = %d\n",a,b,resultado);
-					}
+						}
+						resultado = FazendoContas::raiz(a);
+						std::cout <<"\nRaiz De: "<<a<<": "<<resultado << "\n";
+						menu.limparEntrada();
+						break;
 					
 					default:
 						std::cout<<"\nOperação Inválida!";
@@ -290,7 +279,7 @@ int main(int argc, char** argv) {
 
             
             case 2:
-				std::cout<<"\n1: Operadores Aritméticos \n2: Tipos Primitivos\n3: Estruturas-Condicionais\n4: Estrutura-De-Repetições\n5: Tipos-Lógicos \n6: Collections\n6: Iterator\n";
+				std::cout<<"\n1: Operadores Aritméticos \n2: Tipos Primitivos\n3: Estruturas-Condicionais\n4: Estrutura-De-Repetições\n5: Tipos-Lógicos \n6: Collections\n7: Iterator\n";
 				std::cout<<"\nO QUE DESEJA VER: ";
 				std::cin>>sintaxe;
 				switch(sintaxe){
@@ -411,12 +400,8 @@ int main(int argc, char** argv) {
 			break;
 			
             case 4:
-                
-             break;
-             case 5:
-				std::cout << "\nObrigado Por Utilizar O Programa!\n";
+                std::cout << "\nObrigado Por Utilizar O Programa!\n";
                 menu.tela = false;
-                break;            
              break;
 
             default:
